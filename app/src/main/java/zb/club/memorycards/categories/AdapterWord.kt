@@ -29,9 +29,40 @@ class AdapterWord(var word: MutableList<Word>, val listener: WordClick): Recycle
             anotherSidText = itemView.findViewById(R.id.textViewMeaning)
             itemView.setOnLongClickListener(this)
 
+            card.setOnClickListener {
+                val textone: TextView = it.findViewById(R.id.textViewUnderPic)
+                val texttwo:TextView = it.findViewById(R.id.textViewMeaning)
+                val imageThis: ImageView = it.findViewById(R.id.imageViewFlip)
+                try {
+                    val flipOutAnimatorSet =
+                        AnimatorInflater.loadAnimator(
+                            it.context,
+                            R.animator.flipflop
+                        ) as AnimatorSet
+                    flipOutAnimatorSet.setTarget(it)
+                    flipOutAnimatorSet.start()
+                    if(textone.visibility == View.VISIBLE){
 
+                        if(imageThis.visibility != View.GONE){imageThis.visibility = View.INVISIBLE}
+                        textone.visibility = View.INVISIBLE
+                        texttwo.visibility = View.VISIBLE
+
+
+                    } else {
+
+                        if(imageThis.visibility != View.GONE){imageThis.visibility = View.VISIBLE}
+                        texttwo.visibility = View.INVISIBLE
+                        textone.visibility = View.VISIBLE
+
+
+
+                    } } catch (e: Exception) {
+
+                }
+            }
 
         }
+
 
         override fun onLongClick(p0: View?): Boolean {
 
@@ -59,41 +90,11 @@ class AdapterWord(var word: MutableList<Word>, val listener: WordClick): Recycle
         textUnderpic.visibility = View.VISIBLE
         anotherSidText.setText(currentItem.meaning)
         anotherSidText.visibility = View.INVISIBLE
-        if(currentItem.picture.isNullOrEmpty() || currentItem.picture == null){image.visibility = View.INVISIBLE
+        if(currentItem.picture.isNullOrEmpty() || currentItem.picture == null){image.visibility = View.GONE
         }else{image.visibility = View.VISIBLE
         image.load(currentItem.picture.toUri())}
 
-        card.setOnClickListener {
-               val textone: TextView = it.findViewById(R.id.textViewUnderPic)
-              val texttwo:TextView = it.findViewById(R.id.textViewMeaning)
-            val imageThis: ImageView = it.findViewById(R.id.imageViewFlip)
-                try {
-                    val flipOutAnimatorSet =
-                        AnimatorInflater.loadAnimator(
-                            it.context,
-                            R.animator.flipflop
-                        ) as AnimatorSet
-                    flipOutAnimatorSet.setTarget(it)
-                    flipOutAnimatorSet.start()
-                    if(textone.visibility == View.VISIBLE){
 
-                         imageThis.visibility = View.INVISIBLE
-                            textone.visibility = View.INVISIBLE
-                            texttwo.visibility = View.VISIBLE
-
-
-                       } else {
-
-                             imageThis.visibility = View.VISIBLE
-                             texttwo.visibility = View.INVISIBLE
-                             textone.visibility = View.VISIBLE
-
-
-
-                    } } catch (e: Exception) {
-
-                }
-            }
         }
 
 
